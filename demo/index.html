@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <title>behaviour-accordion demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <script type="module" src="../behaviour-accordion.js"></script>
+    <style>
+      .blocks {
+        display:flex;
+        display-direction:row;
+        flex-wrap: wrap;
+      }
+      .block {
+        display:flex;
+        display-direction:column;
+        flex-wrap: wrap;
+        white-space: normal;
+      }
+      .code {
+        padding: 20px;
+        color:#FFF; 
+        background: #000;
+      }
+      .attributes {
+        padding-left: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="vertical-section-container centered">
+      <h3>Basic behaviour-accordion Demo</h3>
+      <div class="blocks">
+        <pre class="block code">
+          <code>
+            &lt;behaviour-accordion target="#id or .css-class"&gt;&lt;/behaviour-accordion&gt;
+          </code>
+        </pre>
+        <pre class="block attributes">
+          <h3>Attributes</h3>
+          <ul>
+            <li>target (String)</li>
+          </ul>
+        </pre>
+      </div>
+
+      <h3>TITULO DEL ELEMENTO A DESPLEGAR <behaviour-accordion target="#accordion-content"></behaviour-accordion></h3>
+      <div id="accordion-content">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br>
+        Perferendis beatae tempora dolorum vitae veritatis necessitatibus porro praesentium<br>
+        itaque ratione consectetur non provident ducimus nulla cupiditate possimus<br>
+        voluptatum, deserunt, libero laudantium.<br><br>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br>
+        Perferendis beatae tempora dolorum vitae veritatis necessitatibus porro praesentium<br>
+        itaque ratione consectetur non provident ducimus nulla cupiditate possimus<br>
+        voluptatum, deserunt, libero laudantium.<br><br>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br>
+        Perferendis beatae tempora dolorum vitae veritatis necessitatibus porro praesentium<br>
+        itaque ratione consectetur non provident ducimus nulla cupiditate possimus<br>
+        voluptatum, deserunt, libero laudantium.<br><br>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br>
+        Perferendis beatae tempora dolorum vitae veritatis necessitatibus porro praesentium<br>
+        itaque ratione consectetur non provident ducimus nulla cupiditate possimus<br>
+        voluptatum, deserunt, libero laudantium.<br><br>
+      </div>
+    </div>
+  </body>
+</html>
