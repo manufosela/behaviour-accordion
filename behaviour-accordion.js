@@ -22,6 +22,9 @@ class BehaviourAccordion extends LitElement {
   }
 
   static get styles() {
+    /** CSS-VARIABLES
+     --arrow-color: #333;
+     */
     return css`
       :host {
         display: inline;
@@ -36,15 +39,45 @@ class BehaviourAccordion extends LitElement {
         margin-top: 0;
         border: 8px solid transparent;
       }
+      .disabled {
+        cursor: not-allowed;
+        opacity:0.3;
+      }
       .down {
-        border-top-color: #333;
+        border-top-color: var(--arrow-color, #333);
         top: 15px;
       }
       .up {
-        border-bottom-color: #333;
+        border-bottom-color: var(--arrow-color, #333);
         top: -13px;
       }
     `;
+  }
+
+  _collapseSection() {
+    const element = this.targetElement;
+    const sectionHeight = element.scrollHeight;
+    const elementTransition = element.style.transition;
+    element.style.transition = '';
+    requestAnimationFrame(() => {
+      element.style.height = sectionHeight + 'px';
+      element.style.transition = elementTransition;
+      requestAnimationFrame(() => {
+        element.style.height = 0 + 'px';
+      });
+    });
+    element.setAttribute('data-collapsed', 'true');
+  }
+
+  _expandSection() {
+    const element = this.targetElement;
+    const sectionHeight = element.scrollHeight;
+    element.style.height = sectionHeight + 'px';
+    element.addEventListener('transitionend', (e) => {
+      element.removeEventListener('transitionend', arguments.callee);
+      element.style.height = null;
+    });
+    element.setAttribute('data-collapsed', 'false');
   }
 
   _toggleCollapse(ev) {
@@ -53,11 +86,11 @@ class BehaviourAccordion extends LitElement {
       if (el.classList.value.includes('up')) {
         el.classList.remove('up');
         el.classList.add('down');
-        this.targetElement.style = this.collapsedStyle;
+        this._collapseSection();
       } else {
         el.classList.remove('down');
         el.classList.add('up');
-        this.targetElement.style = '';
+        this._expandSection();
       }
     }
   }
@@ -67,7 +100,7 @@ class BehaviourAccordion extends LitElement {
     this.target = '';
 
     this.targetElement = null;
-    this.collapsedStyle = 'overflow: hidden; height: 0px;';
+    this.collapsedStyle = 'overflow:hidden; transition:height 0.3s ease-out;';
 
     this._toggleCollapse = this._toggleCollapse.bind(this);
   }
@@ -84,6 +117,12 @@ class BehaviourAccordion extends LitElement {
   firstUpdated() {
     this.shadowRoot.querySelector('a').addEventListener('click', this._toggleCollapse);
     this.targetElement = document.querySelector(this.target) || null;
+    if (this.targetElement) {
+      this.targetElement.style = this.collapsedStyle;
+      this.shadowRoot.querySelector('a').classList.remove('disabled');
+    } else {
+      this.shadowRoot.querySelector('a').classList.add('disabled');
+    }
   }
 
   render() {
